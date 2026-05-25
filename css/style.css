@@ -56,7 +56,9 @@ nav {
   color: var(--text); white-space: nowrap;
   margin-right: 2rem;
   display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
 }
+.nav-brand:hover { text-decoration: none; opacity: 0.8; }
 .nav-brand span { color: var(--accent); }
 .nav-links { display: flex; gap: 0; flex: 1; }
 .nav-links a {
