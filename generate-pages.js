@@ -48,6 +48,17 @@ function truncate(str, n) {
   return str.length > n ? str.slice(0, n) + '…' : str;
 }
 
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
 const navHTML = `<nav>
   <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
   <div class="nav-links">
@@ -101,7 +112,7 @@ for (const layer of data.layers) {
     }).join('');
 
     const relatedHTML = related.length > 0 ? `<div class="sidebar-card">
-      <h3>Related risks in ${layer.name}</h3>
+      <h3>Related risks in ${esc(layer.name)}</h3>
       ${related.map(r => `<a class="related-risk" href="${r.id}.html">
         <div class="related-dot" style="background:${layer.color}"></div>
         <div>
@@ -127,14 +138,14 @@ ${navHTML}
     <div class="breadcrumb animate-in">
       <a href="../index.html">Explorer</a>
       <span class="breadcrumb-sep">›</span>
-      <a href="../layer/${layer.id}.html">${layer.name}</a>
+      <a href="../layer/${layer.id}.html">${esc(layer.name)}</a>
       <span class="breadcrumb-sep">›</span>
       <span>${risk.title}</span>
     </div>
 
     <div class="risk-title-block animate-in">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:${layer.color}22;color:${layer.color};border:1px solid ${layer.color}44">${layer.name}</span>
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:${hexToRgba(layer.color, 0.13)};color:${layer.color};border:1px solid ${hexToRgba(layer.color, 0.27)}">${esc(layer.name)}</span>
         ${severityBadge(risk.severity)}
       </div>
       <h1>${risk.title}</h1>
@@ -176,7 +187,7 @@ ${navHTML}
           </div>
           <div class="sidebar-stat">
             <span class="sidebar-stat-label">Layer</span>
-            <span class="sidebar-stat-value" style="color:${layer.color}">${layer.name}</span>
+            <span class="sidebar-stat-value" style="color:${layer.color}">${esc(layer.name)}</span>
           </div>
           <div class="sidebar-stat">
             <span class="sidebar-stat-label">Frameworks</span>
@@ -196,7 +207,7 @@ ${navHTML}
         ${relatedHTML}
 
         <div style="margin-top:12px">
-          <a href="../layer/${layer.id}.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All ${layer.name} risks</a>
+          <a href="../layer/${layer.id}.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All ${esc(layer.name)} risks</a>
         </div>
       </div>
     </div>
@@ -265,13 +276,13 @@ ${navHTML}
   <div class="breadcrumb animate-in" style="padding-top:2rem">
     <a href="../index.html">Explorer</a>
     <span class="breadcrumb-sep">›</span>
-    <span>${layer.name}</span>
+    <span>${esc(layer.name)}</span>
   </div>
 
   <div class="layer-page-header animate-in">
-    <div class="layer-icon-large" style="background:${layer.color}22;color:${layer.color}">${icons[layer.id] || '◆'}</div>
+    <div class="layer-icon-large" style="background:${hexToRgba(layer.color, 0.13)};color:${layer.color}">${icons[layer.id] || '◆'}</div>
     <div>
-      <h1>${layer.name}</h1>
+      <h1>${esc(layer.name)}</h1>
       <p>${layer.description}</p>
       <div style="display:flex;gap:12px;margin-top:1rem;flex-wrap:wrap">
         <span style="font-family:var(--font-mono);font-size:12px;color:var(--text3)">${layer.risks.length} risks mapped</span>
