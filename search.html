@@ -22,13 +22,13 @@
 <div class="container">
   <div class="hero">
     <div class="hero-eyebrow">Search</div>
-    <h1>Find <em>risks & controls</em></h1>
+    <h1>Find <em>risks &amp; controls</em></h1>
     <p>Search across all risks, descriptions, attack scenarios, and control references. Filter by layer, framework, or severity.</p>
   </div>
 
   <div class="search-bar">
     <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="search-input" id="search-input" type="text" placeholder="Search risks, controls, attack scenarios…" autofocus>
+    <input class="search-input" id="search-input" type="text" placeholder="Search risks, controls, attack scenarios..." autofocus>
     <span id="result-count" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);white-space:nowrap"></span>
   </div>
 
@@ -49,7 +49,7 @@
 
   <div class="results-grid" id="results-grid"></div>
   <div id="no-results" style="display:none;text-align:center;padding:4rem 0;color:var(--text3)">
-    <div style="font-size:32px;margin-bottom:12px">∅</div>
+    <div style="font-size:32px;margin-bottom:12px">empty set</div>
     <div style="font-size:14px">No risks match your search. Try different terms or clear filters.</div>
   </div>
 </div>
@@ -62,86 +62,99 @@
 <script src="js/data.js"></script>
 <script src="js/utils.js"></script>
 <script>
-let query = '';
-let activeLayer = 'all';
-let activeFw = 'all';
-let activeSev = 'all';
+var query = '';
+var activeLayer = 'all';
+var activeFw = 'all';
+var activeSev = 'all';
 
-const allRisks = getAllRisks();
-
-// Layer filter
-const layerEl = document.getElementById('layer-filter');
-layerEl.innerHTML = `<button class="filter-btn active" data-val="all">All layers</button>`;
-AI_RISK_DATA.layers.forEach(l => {
-  layerEl.innerHTML += `<button class="filter-btn" data-val="${l.id}" style="border-left:2px solid ${l.color}">${l.name}</button>`;
+// Build layer filter
+var layerEl = document.getElementById('layer-filter');
+layerEl.innerHTML = '<button class="filter-btn active" data-val="all">All layers</button>';
+AI_RISK_DATA.layers.forEach(function(l) {
+  layerEl.innerHTML += '<button class="filter-btn" data-val="' + l.id + '" style="border-left:2px solid ' + l.color + '">' + l.name + '</button>';
 });
-layerEl.addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn'); if (!btn) return;
+layerEl.addEventListener('click', function(e) {
+  var btn = e.target.closest('.filter-btn');
+  if (!btn) return;
   activeLayer = btn.dataset.val;
-  layerEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); render();
+  layerEl.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
 });
 
-// FW filter
-const fwEl = document.getElementById('fw-filter');
-fwEl.innerHTML = `<button class="filter-btn active" data-val="all">All</button>`;
-AI_RISK_DATA.frameworks.forEach(fw => {
-  fwEl.innerHTML += `<button class="filter-btn" data-val="${fw.id}">${fw.short}</button>`;
+// Build framework filter
+var fwEl = document.getElementById('fw-filter');
+fwEl.innerHTML = '<button class="filter-btn active" data-val="all">All</button>';
+AI_RISK_DATA.frameworks.forEach(function(fw) {
+  fwEl.innerHTML += '<button class="filter-btn" data-val="' + fw.id + '">' + fw.short + '</button>';
 });
-fwEl.addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn'); if (!btn) return;
+fwEl.addEventListener('click', function(e) {
+  var btn = e.target.closest('.filter-btn');
+  if (!btn) return;
   activeFw = btn.dataset.val;
-  fwEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); render();
+  fwEl.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
 });
 
-// Sev filter
-const sevEl = document.getElementById('sev-filter');
-['all','critical','high','medium'].forEach(s => {
-  sevEl.innerHTML += `<button class="filter-btn${s==='all'?' active':''}" data-val="${s}">${s === 'all' ? 'All' : s}</button>`;
+// Build severity filter
+var sevEl = document.getElementById('sev-filter');
+['all','critical','high','medium'].forEach(function(s) {
+  sevEl.innerHTML += '<button class="filter-btn' + (s === 'all' ? ' active' : '') + '" data-val="' + s + '">' + (s === 'all' ? 'All' : s) + '</button>';
 });
-sevEl.addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn'); if (!btn) return;
+sevEl.addEventListener('click', function(e) {
+  var btn = e.target.closest('.filter-btn');
+  if (!btn) return;
   activeSev = btn.dataset.val;
-  sevEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); render();
+  sevEl.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
 });
 
-document.getElementById('search-input').addEventListener('input', e => {
+document.getElementById('search-input').addEventListener('input', function(e) {
   query = e.target.value.toLowerCase();
   render();
 });
 
-function highlight(text, q) {
-  if (!q) return text;
-  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(new RegExp(escaped, 'gi'), m => `<mark style="background:rgba(108,142,255,0.25);color:var(--accent);border-radius:2px">${m}</mark>`);
+function safeHighlight(text, q) {
+  if (!q || q.length < 2) return text;
+  try {
+    var escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(escaped, 'gi'), function(m) {
+      return '<mark style="background:rgba(108,142,255,0.25);color:var(--accent);border-radius:2px">' + m + '</mark>';
+    });
+  } catch(e) {
+    return text;
+  }
 }
 
 function render() {
-  let results = allRisks;
+  var allRisks = getAllRisks();
+  var results = allRisks;
 
-  // Apply filters
-  if (activeLayer !== 'all') results = results.filter(r => r.layerId === activeLayer);
-  if (activeFw !== 'all') results = results.filter(r => r.frameworks.includes(activeFw));
-  if (activeSev !== 'all') results = results.filter(r => r.severity === activeSev);
-
-  // Apply search
-  if (query) {
-    results = results.filter(r => {
-      const searchable = [
-        r.title, r.description, r.scenario, r.example,
-        ...r.controls.map(c => `${c.title} ${c.ref} ${c.detail}`)
-      ].join(' ').toLowerCase();
-      return searchable.includes(query);
+  if (activeLayer !== 'all') {
+    results = results.filter(function(r) { return r.layerId === activeLayer; });
+  }
+  if (activeFw !== 'all') {
+    results = results.filter(function(r) { return r.frameworks.indexOf(activeFw) !== -1; });
+  }
+  if (activeSev !== 'all') {
+    results = results.filter(function(r) { return r.severity === activeSev; });
+  }
+  if (query && query.length >= 1) {
+    results = results.filter(function(r) {
+      var searchable = [r.title, r.description, r.scenario, r.example]
+        .concat(r.controls.map(function(c) { return c.title + ' ' + c.ref + ' ' + c.detail; }))
+        .join(' ').toLowerCase();
+      return searchable.indexOf(query) !== -1;
     });
   }
 
-  const grid = document.getElementById('results-grid');
-  const noRes = document.getElementById('no-results');
-  const count = document.getElementById('result-count');
+  var grid = document.getElementById('results-grid');
+  var noRes = document.getElementById('no-results');
+  var countEl = document.getElementById('result-count');
 
-  count.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+  countEl.textContent = results.length + ' result' + (results.length !== 1 ? 's' : '');
 
   if (results.length === 0) {
     grid.innerHTML = '';
@@ -150,25 +163,26 @@ function render() {
   }
   noRes.style.display = 'none';
 
-  grid.innerHTML = results.map(r => {
-    const desc = highlight(truncate(r.description, 120), query);
-    const title = highlight(r.title, query);
-    const fwBadges = r.frameworks.slice(0,4).map(f => fwBadge(f)).join('');
-    const layer = AI_RISK_DATA.layers.find(l => l.id === r.layerId);
-    return `<a href="risk/${r.id}.html" class="risk-card animate-in">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-        <span style="font-family:var(--font-mono);font-size:10px;padding:2px 8px;border-radius:3px;background:${layer.color}22;color:${layer.color};border:1px solid ${layer.color}33">${layer.name}</span>
-      </div>
-      <div class="risk-card-title">${title}</div>
-      <div class="risk-card-sub">${desc}</div>
-      <div class="risk-card-footer">
-        ${severityBadge(r.severity)}
-        <div class="fw-pills">${fwBadges}</div>
-      </div>
-    </a>`;
+  grid.innerHTML = results.map(function(r) {
+    var layer = AI_RISK_DATA.layers.find(function(l) { return l.id === r.layerId; });
+    var desc = safeHighlight(truncate(r.description, 120), query);
+    var title = safeHighlight(r.title, query);
+    var fwBadges = r.frameworks.slice(0, 4).map(function(f) { return fwBadge(f); }).join('');
+    return '<a href="risk/' + r.id + '.html" class="risk-card animate-in">'
+      + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'
+      + '<span style="font-family:var(--font-mono);font-size:10px;padding:2px 8px;border-radius:3px;background:' + layer.color + '22;color:' + layer.color + ';border:1px solid ' + layer.color + '33">' + layer.name + '</span>'
+      + '</div>'
+      + '<div class="risk-card-title">' + title + '</div>'
+      + '<div class="risk-card-sub">' + desc + '</div>'
+      + '<div class="risk-card-footer">'
+      + severityBadge(r.severity)
+      + '<div class="fw-pills">' + fwBadges + '</div>'
+      + '</div>'
+      + '</a>';
   }).join('');
 }
 
+// Run on load
 render();
 </script>
 </body>
