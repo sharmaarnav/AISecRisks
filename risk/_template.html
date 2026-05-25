@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Risk Detail — AI Risk Explorer</title>
+<meta name="description" id="page-desc" content="AI risk detail page">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="risk-detail" id="risk-detail">
+    <div style="color:var(--text3); font-size:14px; padding:4rem 0;">Loading risk data…</div>
+  </div>
+</div>
+
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/utils.js"></script>
+<script>
+function getRiskIdFromPath() {
+  // Filename without .html is the risk ID
+  const path = window.location.pathname;
+  const filename = path.split('/').pop().replace('.html', '');
+  return filename;
+}
+
+function render() {
+  const riskId = getRiskIdFromPath();
+  const found = getRisk(riskId);
+
+  if (!found) {
+    document.getElementById('risk-detail').innerHTML = `
+      <div class="breadcrumb"><a href="../index.html">Explorer</a><span class="breadcrumb-sep">›</span><span>Risk not found</span></div>
+      <p style="color:var(--text2)">This risk could not be found. <a href="../index.html">Return to Explorer</a>.</p>
+    `;
+    return;
+  }
+
+  const { risk, layer } = found;
+  document.title = `${risk.title} — AI Risk Explorer`;
+  document.getElementById('page-desc').content = risk.description;
+
+  // Related risks from same layer
+  const related = layer.risks.filter(r => r.id !== risk.id).slice(0, 5);
+
+  // Framework names mapped
+  const fwNames = risk.frameworks.map(f => {
+    const fw = AI_RISK_DATA.frameworks.find(x => x.id === f);
+    return fw ? fw.name : f;
+  }).join(', ');
+
+  const el = document.getElementById('risk-detail');
+  el.innerHTML = `
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/${layer.id}.html">${layer.name}</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>${risk.title}</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:${layer.color}22;color:${layer.color};border:1px solid ${layer.color}44">${layer.name}</span>
+        ${severityBadge(risk.severity)}
+      </div>
+      <h1>${risk.title}</h1>
+      <div class="risk-meta">
+        <div class="fw-pills">${risk.frameworks.map(f => fwBadge(f)).join('')}</div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">${risk.controls.length} control${risk.controls.length!==1?'s':''} mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">${risk.description}</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">${risk.scenario}</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">${risk.example}</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>${risk.controls.length} mapped controls</h2>
+          ${risk.controls.map(ctrl => {
+            const fw = AI_RISK_DATA.frameworks.find(f => f.id === ctrl.framework);
+            return `
+              <div class="control-card">
+                <div class="control-header">
+                  <span class="control-badge" style="${controlBadgeStyle(ctrl.framework)}">${fw ? fw.short : ctrl.framework}</span>
+                  <div>
+                    <div class="control-title">${ctrl.title}</div>
+                    <div class="control-ref">${ctrl.ref}</div>
+                  </div>
+                </div>
+                <div class="control-detail">${ctrl.detail}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            ${severityBadge(risk.severity)}
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:${layer.color}">${layer.name}</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">${risk.frameworks.length}</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls</span>
+            <span class="sidebar-stat-value">${risk.controls.length}</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          ${risk.frameworks.map(f => {
+            const fw = AI_RISK_DATA.frameworks.find(x => x.id === f);
+            const c = FW_COLORS[f];
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+              <div>
+                <div style="font-size:13px;color:var(--text)">${fw ? fw.name : f}</div>
+                <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">${fw ? fw.version : ''}</div>
+              </div>
+              <a href="${fw ? fw.url : '#'}" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:${c ? c.color : '#aaa'}">↗</a>
+            </div>`;
+          }).join('')}
+        </div>
+
+        ${related.length > 0 ? `
+        <div class="sidebar-card">
+          <h3>Related risks (${layer.name})</h3>
+          ${related.map(r => `
+            <a class="related-risk" href="${r.id}.html">
+              <div class="related-dot" style="background:${layer.color}"></div>
+              <div>
+                <div class="related-title">${r.title}</div>
+                <div style="margin-top:2px">${severityBadge(r.severity)}</div>
+              </div>
+            </a>
+          `).join('')}
+        </div>` : ''}
+
+        <div style="margin-top: 12px;">
+          <a href="../layer/${layer.id}.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--border2)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">← All ${layer.name} risks</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insecure output handling — AI Risk Explorer</title>
+<meta name="description" content="Model outputs are passed unsanitised to downstream components — web renderers, SQL engines, shell interpreters, or code executors — causing XSS, SQL injection, ">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/inference.html">Inference & API Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Insecure output handling</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#EA580C22;color:#EA580C;border:1px solid #EA580C44">Inference & API Layer</span>
+        <span class="severity-badge sev-critical">critical</span>
+      </div>
+      <h1>Insecure output handling</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(21,128,61,0.15);color:#86EFAC;border:1px solid rgba(21,128,61,0.3)">Google SAIF</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">Model outputs are passed unsanitised to downstream components — web renderers, SQL engines, shell interpreters, or code executors — causing XSS, SQL injection, command injection, or SSRF via AI-generated content.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">An AI coding assistant generates SQL based on natural language. The application passes the output directly to a database query without parameterisation. An attacker prompts for a query that drops tables.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">Multiple CVEs in AI coding assistants that pass LLM-generated code directly to execution. XSS via LLM-generated Markdown in chat interfaces.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>3 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span>
+          <div>
+            <div class="control-title">Treat outputs as untrusted</div>
+            <div class="control-ref">LLM02 – Insecure Output Handling</div>
+          </div>
+        </div>
+        <div class="control-detail">Never pass raw LLM output to system shells, SQL engines, or code interpreters. Apply the same sanitisation you would apply to external user input.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span>
+          <div>
+            <div class="control-title">Output classification layer</div>
+            <div class="control-ref">MEASURE 2.10 – Output validation</div>
+          </div>
+        </div>
+        <div class="control-detail">Implement output classifiers and content safety filters. Log all outputs for post-hoc review. Apply allowlisting where possible rather than blocklisting.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span>
+          <div>
+            <div class="control-title">Context-specific encoding</div>
+            <div class="control-ref">Secure-by-Design Principle 2</div>
+          </div>
+        </div>
+        <div class="control-detail">Apply context-aware output encoding: HTML encode for web rendering, parameterise for SQL, escape for shell. Use templating engines with auto-escaping.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-critical">critical</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#EA580C">Inference & API Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">4</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">OWASP LLM Top 10</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2025</div>
+        </div>
+        <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">NIST AI RMF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023 + GenAI Profile 2024</div>
+        </div>
+        <a href="https://airc.nist.gov/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#93C5FD">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">CISA / NCSC</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">Secure-by-Design AI 2024</div>
+        </div>
+        <a href="https://www.cisa.gov/ai" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">Google SAIF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023</div>
+        </div>
+        <a href="https://saif.google/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#86EFAC">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Inference & API Layer</h3>
+      <a class="related-risk" href="prompt-injection.html">
+        <div class="related-dot" style="background:#EA580C"></div>
+        <div>
+          <div class="related-title">Prompt injection</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-critical">critical</span></div>
+        </div>
+      </a><a class="related-risk" href="rag-poisoning.html">
+        <div class="related-dot" style="background:#EA580C"></div>
+        <div>
+          <div class="related-title">RAG / vector database poisoning</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="model-dos.html">
+        <div class="related-dot" style="background:#EA580C"></div>
+        <div>
+          <div class="related-title">Model DoS / resource exhaustion</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="api-authentication.html">
+        <div class="related-dot" style="background:#EA580C"></div>
+        <div>
+          <div class="related-title">Broken API authentication</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="model-jailbreak.html">
+        <div class="related-dot" style="background:#EA580C"></div>
+        <div>
+          <div class="related-title">Model jailbreaking</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/inference.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Inference & API Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

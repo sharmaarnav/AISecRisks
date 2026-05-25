@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-generated misinformation and manipulation — AI Risk Explorer</title>
+<meta name="description" content="AI systems are weaponised to generate large-scale, convincing misinformation — fake news articles, fraudulent documents, deepfakes, or influence campaign conten">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/application.html">Application Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>AI-generated misinformation and manipulation</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#0EA5E922;color:#0EA5E9;border:1px solid #0EA5E944">Application Layer</span>
+        <span class="severity-badge sev-high">high</span>
+      </div>
+      <h1>AI-generated misinformation and manipulation</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(29,78,216,0.15);color:#A5B4FC;border:1px solid rgba(29,78,216,0.3)">EU AI Act</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(3,105,161,0.15);color:#7DD3FC;border:1px solid rgba(3,105,161,0.3)">ENISA</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">AI systems are weaponised to generate large-scale, convincing misinformation — fake news articles, fraudulent documents, deepfakes, or influence campaign content — at a speed and scale impossible by human actors alone.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">Threat actors use fine-tuned LLMs to generate thousands of convincing fake news articles about a company, poisoning search results and causing reputational damage before human fact-checkers can respond.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">GPT-4 used for political influence campaigns (2024). NCSC/CISA warnings on AI-generated election interference content.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>3 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(29,78,216,0.15);color:#A5B4FC;border:1px solid rgba(29,78,216,0.3)">EU AI Act</span>
+          <div>
+            <div class="control-title">AI content labelling</div>
+            <div class="control-ref">Art. 50 – Transparency for GPAI</div>
+          </div>
+        </div>
+        <div class="control-detail">Label AI-generated content at the system level. Implement C2PA (Content Provenance and Authenticity) watermarking for images and documents.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span>
+          <div>
+            <div class="control-title">Content authentication</div>
+            <div class="control-ref">AI deepfake guidance 2024</div>
+          </div>
+        </div>
+        <div class="control-detail">Deploy AI content detection capabilities. Apply digital content provenance standards. Train users to critically evaluate AI-generated content.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span>
+          <div>
+            <div class="control-title">Use case restrictions</div>
+            <div class="control-ref">GOVERN 5 – Trustworthiness</div>
+          </div>
+        </div>
+        <div class="control-detail">Explicitly prohibit and detect use of AI systems for generating political content, impersonation, or synthetic media designed to deceive.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-high">high</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#0EA5E9">Application Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">4</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">EU AI Act</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2024 (enforcement 2025)</div>
+        </div>
+        <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#A5B4FC">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">NIST AI RMF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023 + GenAI Profile 2024</div>
+        </div>
+        <a href="https://airc.nist.gov/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#93C5FD">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">CISA / NCSC</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">Secure-by-Design AI 2024</div>
+        </div>
+        <a href="https://www.cisa.gov/ai" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">ENISA AI Threat Landscape</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2024</div>
+        </div>
+        <a href="https://www.enisa.europa.eu/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#7DD3FC">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Application Layer</h3>
+      <a class="related-risk" href="excessive-agency.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Excessive agency / unsafe autonomous actions</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-critical">critical</span></div>
+        </div>
+      </a><a class="related-risk" href="plugin-compromise.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Plugin / third-party integration compromise</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="sensitive-disclosure.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Sensitive information disclosure</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="multiagent-trust.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Multi-agent trust chain exploitation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="over-reliance.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Over-reliance and automation bias</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-medium">medium</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/application.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Application Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

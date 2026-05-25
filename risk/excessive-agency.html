@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excessive agency / unsafe autonomous actions — AI Risk Explorer</title>
+<meta name="description" content="AI agents with broad tool access, permissions, or decision-making autonomy take actions that exceed their intended scope — deleting files, sending emails, makin">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/application.html">Application Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Excessive agency / unsafe autonomous actions</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#0EA5E922;color:#0EA5E9;border:1px solid #0EA5E944">Application Layer</span>
+        <span class="severity-badge sev-critical">critical</span>
+      </div>
+      <h1>Excessive agency / unsafe autonomous actions</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(157,23,77,0.15);color:#F9A8D4;border:1px solid rgba(157,23,77,0.3)">MAESTRO</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">4 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">AI agents with broad tool access, permissions, or decision-making autonomy take actions that exceed their intended scope — deleting files, sending emails, making API calls, or spending funds without adequate human oversight.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">An AI assistant with calendar, email, and file access receives an indirect prompt injection via a malicious email. Following injected instructions, it forwards all emails in the inbox to an external address and books fake calendar events.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">Multiple LLM agent demonstrations achieving RCE via prompt injection into agentic systems (2023-2024). AutoGPT and similar agents executing unintended actions.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>4 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span>
+          <div>
+            <div class="control-title">Least-privilege tool grants</div>
+            <div class="control-ref">LLM08 – Excessive Agency</div>
+          </div>
+        </div>
+        <div class="control-detail">Apply least-privilege to all tool/function grants. Request only the minimum permissions required. Require human approval for all irreversible or high-impact actions.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(157,23,77,0.15);color:#F9A8D4;border:1px solid rgba(157,23,77,0.3)">MAESTRO</span>
+          <div>
+            <div class="control-title">Action boundary definitions</div>
+            <div class="control-ref">CSA MAESTRO – Agentic layer</div>
+          </div>
+        </div>
+        <div class="control-detail">Define explicit action permission manifests for every agent. Implement hard blocklists for categories of irreversible actions regardless of instruction source.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span>
+          <div>
+            <div class="control-title">Human-in-the-loop controls</div>
+            <div class="control-ref">AI agentic security guidance</div>
+          </div>
+        </div>
+        <div class="control-detail">Mandate human approval checkpoints for: financial transactions, external communications, file deletion, and any action affecting other users.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span>
+          <div>
+            <div class="control-title">Sandboxed execution</div>
+            <div class="control-ref">GOVERN 3.1 – Human oversight</div>
+          </div>
+        </div>
+        <div class="control-detail">Execute agent actions in sandboxed environments first. Apply dry-run modes, action previews, and confirmation gates before consequential execution.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-critical">critical</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#0EA5E9">Application Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">4</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">4</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">OWASP LLM Top 10</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2025</div>
+        </div>
+        <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">CISA / NCSC</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">Secure-by-Design AI 2024</div>
+        </div>
+        <a href="https://www.cisa.gov/ai" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">CSA MAESTRO</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">Feb 2025</div>
+        </div>
+        <a href="https://cloudsecurityalliance.org/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#F9A8D4">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">NIST AI RMF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023 + GenAI Profile 2024</div>
+        </div>
+        <a href="https://airc.nist.gov/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#93C5FD">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Application Layer</h3>
+      <a class="related-risk" href="plugin-compromise.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Plugin / third-party integration compromise</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="sensitive-disclosure.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Sensitive information disclosure</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="misinformation.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">AI-generated misinformation and manipulation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="multiagent-trust.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Multi-agent trust chain exploitation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="over-reliance.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Over-reliance and automation bias</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-medium">medium</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/application.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Application Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plugin / third-party integration compromise — AI Risk Explorer</title>
+<meta name="description" content="AI system plugins or external integrations are compromised, contain malicious code, or have their own vulnerabilities exploited — providing a pathway to attack ">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/application.html">Application Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Plugin / third-party integration compromise</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#0EA5E922;color:#0EA5E9;border:1px solid #0EA5E944">Application Layer</span>
+        <span class="severity-badge sev-high">high</span>
+      </div>
+      <h1>Plugin / third-party integration compromise</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE ATLAS</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">AI system plugins or external integrations are compromised, contain malicious code, or have their own vulnerabilities exploited — providing a pathway to attack the AI system or its users through the integration layer.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">A popular third-party plugin for an AI coding assistant is compromised by a dependency confusion attack. All users of the plugin have their conversation histories and code exfiltrated to an attacker-controlled server.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">AI plugin marketplace security research demonstrating cross-plugin data theft (2023). NPM package supply chain attacks affecting AI tooling.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>3 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span>
+          <div>
+            <div class="control-title">Plugin vetting process</div>
+            <div class="control-ref">LLM05 – Supply Chain</div>
+          </div>
+        </div>
+        <div class="control-detail">Establish a security review process for all third-party plugins and integrations. Maintain an AI Bill of Materials (AIBOM). Enforce code signing for plugin packages.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE</span>
+          <div>
+            <div class="control-title">Plugin sandboxing</div>
+            <div class="control-ref">AML.T0010 – ML supply chain</div>
+          </div>
+        </div>
+        <div class="control-detail">Run plugins in isolated sandboxes with minimal system access. Apply network egress filtering on plugin execution environments.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span>
+          <div>
+            <div class="control-title">Vendor risk assessment</div>
+            <div class="control-ref">GOVERN 2.1 – Third-party risk</div>
+          </div>
+        </div>
+        <div class="control-detail">Conduct third-party security assessments for high-privilege AI integrations. Apply contractual security requirements and right-to-audit clauses.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-high">high</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#0EA5E9">Application Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">OWASP LLM Top 10</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2025</div>
+        </div>
+        <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">MITRE ATLAS</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">v5.1 (2025)</div>
+        </div>
+        <a href="https://atlas.mitre.org/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#67E8F9">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">NIST AI RMF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023 + GenAI Profile 2024</div>
+        </div>
+        <a href="https://airc.nist.gov/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#93C5FD">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Application Layer</h3>
+      <a class="related-risk" href="excessive-agency.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Excessive agency / unsafe autonomous actions</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-critical">critical</span></div>
+        </div>
+      </a><a class="related-risk" href="sensitive-disclosure.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Sensitive information disclosure</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="misinformation.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">AI-generated misinformation and manipulation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="multiagent-trust.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Multi-agent trust chain exploitation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="over-reliance.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Over-reliance and automation bias</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-medium">medium</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/application.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Application Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

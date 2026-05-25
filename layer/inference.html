@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inference & API Layer Risks — AI Risk Explorer</title>
+<meta name="description" content="Model serving infrastructure, inference APIs, vector databases, embedding services, and orchestration layers. The attack surface where external users interact w">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="breadcrumb animate-in" style="padding-top:2rem">
+    <a href="../index.html">Explorer</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Inference & API Layer</span>
+  </div>
+
+  <div class="layer-page-header animate-in">
+    <div class="layer-icon-large" style="background:#EA580C22;color:#EA580C">◉</div>
+    <div>
+      <h1>Inference & API Layer</h1>
+      <p>Model serving infrastructure, inference APIs, vector databases, embedding services, and orchestration layers. The attack surface where external users interact with AI capabilities.</p>
+      <div style="display:flex;gap:12px;margin-top:1rem;flex-wrap:wrap">
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--text3)">7 risks mapped</span>
+        <span class="severity-badge sev-critical">2 critical</span>
+        <span class="severity-badge sev-high">4 high</span>
+        <span class="severity-badge sev-medium">1 medium</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 260px;gap:2rem;align-items:start">
+    <div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">All risks in this layer</div>
+      <div class="full-risk-list animate-in">
+        <a href="../risk/prompt-injection.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-critical">critical</span>
+        </div>
+        <h3>Prompt injection</h3>
+        <p>Attackers embed malicious instructions in user-controlled content that override or supplement the system prompt, hijacking the model's behaviour. Direct injecti…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE ATLAS</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(21,128,61,0.15);color:#86EFAC;border:1px solid rgba(21,128,61,0.3)">Google SAIF</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">4 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/insecure-output.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-critical">critical</span>
+        </div>
+        <h3>Insecure output handling</h3>
+        <p>Model outputs are passed unsanitised to downstream components — web renderers, SQL engines, shell interpreters, or code executors — causing XSS, SQL injection, …</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(21,128,61,0.15);color:#86EFAC;border:1px solid rgba(21,128,61,0.3)">Google SAIF</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/rag-poisoning.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-high">high</span>
+        </div>
+        <h3>RAG / vector database poisoning</h3>
+        <p>An attacker injects malicious content into documents or data sources that feed a Retrieval Augmented Generation pipeline. When retrieved and injected into promp…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE ATLAS</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/model-dos.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-high">high</span>
+        </div>
+        <h3>Model DoS / resource exhaustion</h3>
+        <p>Adversaries craft inputs designed to maximise compute consumption — extremely long contexts, repetitive patterns, or adversarially designed token sequences that…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/api-authentication.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-high">high</span>
+        </div>
+        <h3>Broken API authentication</h3>
+        <p>Weak or missing authentication on AI inference APIs allows unauthorised access, API key theft leading to account takeover, or privilege escalation to access oth…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/model-jailbreak.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-high">high</span>
+        </div>
+        <h3>Model jailbreaking</h3>
+        <p>Adversaries craft inputs designed to bypass safety guardrails, content policies, and ethical constraints, causing the model to produce harmful, dangerous, or po…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE ATLAS</span><span class="fw-pill" style="background:rgba(185,28,28,0.15);color:#FCA5A5;border:1px solid rgba(185,28,28,0.3)">CISA</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+<a href="../risk/embedding-inversion.html" class="full-risk-card">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="severity-badge sev-medium">medium</span>
+        </div>
+        <h3>Embedding/vector inversion</h3>
+        <p>Vector embeddings stored in databases can be partially reversed to recover approximate representations of the original text, potentially exposing confidential c…</p>
+        <div class="fw-pills" style="margin-top:10px"><span class="fw-pill" style="background:rgba(3,105,161,0.15);color:#7DD3FC;border:1px solid rgba(3,105,161,0.3)">ENISA</span><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span></div>
+      </div>
+      <div class="full-risk-card-right">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">2 controls</span>
+        <span style="color:var(--text3);font-size:18px">›</span>
+      </div>
+    </a>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-card" style="position:sticky;top:72px">
+        <h3>Other layers</h3>
+        
+    <a href="data.html" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:var(--r);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='none'">
+      <div style="width:8px;height:8px;border-radius:50%;background:#059669;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Data Layer</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto">6</span>
+    </a>
+  
+    <a href="model.html" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:var(--r);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='none'">
+      <div style="width:8px;height:8px;border-radius:50%;background:#7C3AED;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Model Layer</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto">8</span>
+    </a>
+  
+    <a href="application.html" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:var(--r);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='none'">
+      <div style="width:8px;height:8px;border-radius:50%;background:#0EA5E9;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Application Layer</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto">6</span>
+    </a>
+  
+    <a href="governance.html" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:var(--r);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='none'">
+      <div style="width:8px;height:8px;border-radius:50%;background:#475569;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text2)">Governance Layer</span>
+      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:auto">7</span>
+    </a>
+  
+        <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px">
+          <a href="../index.html" style="font-size:13px;color:var(--text3);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 0">
+            ← Back to full explorer
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:4rem"></div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

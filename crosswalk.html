@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Framework Crosswalk — AI Risk Explorer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="index.html">Explorer</a>
+    <a href="search.html">Search</a>
+    <a href="frameworks.html">Frameworks</a>
+    <a href="crosswalk.html" class="active">Crosswalk</a>
+  </div>
+  <div class="nav-right"><span class="badge-nav">v1.0 · 2025</span></div>
+</nav>
+
+<div class="container-wide">
+  <div class="hero" style="max-width:1100px;margin-left:auto;margin-right:auto">
+    <div class="hero-eyebrow">Framework crosswalk</div>
+    <h1>Risk × <em>Framework</em> matrix</h1>
+    <p>Every risk mapped across all frameworks. Click any risk name to read the full detail. Highlighted cells indicate direct framework coverage with specific controls.</p>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto 1.5rem">
+    <div class="filter-row" id="layer-filter"></div>
+  </div>
+
+  <div class="crosswalk-wrap" style="max-width:1100px;margin:0 auto 3rem" id="table-wrap"></div>
+</div>
+
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script>
+let activeLayerFilter = 'all';
+
+const layerEl = document.getElementById('layer-filter');
+layerEl.innerHTML = `<button class="filter-btn active" data-val="all">All layers</button>`;
+AI_RISK_DATA.layers.forEach(l => {
+  layerEl.innerHTML += `<button class="filter-btn" data-val="${l.id}" style="border-left:2px solid ${l.color}">${l.name}</button>`;
+});
+layerEl.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn'); if (!btn) return;
+  activeLayerFilter = btn.dataset.val;
+  layerEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderTable();
+});
+
+function renderTable() {
+  const allRisks = getAllRisks().filter(r => activeLayerFilter === 'all' || r.layerId === activeLayerFilter);
+  const frameworks = AI_RISK_DATA.frameworks;
+
+  let html = `<table class="crosswalk-table">
+    <thead>
+      <tr>
+        <th style="min-width:200px">Risk</th>
+        <th>Layer</th>
+        <th>Sev</th>
+        ${frameworks.map(fw => {
+          const c = FW_COLORS[fw.id];
+          return `<th style="text-align:center"><span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${c.bg};color:${c.color};font-family:var(--font-mono)">${fw.short}</span></th>`;
+        }).join('')}
+      </tr>
+    </thead>
+    <tbody>`;
+
+  let lastLayerId = null;
+  allRisks.forEach(r => {
+    const layer = AI_RISK_DATA.layers.find(l => l.id === r.layerId);
+
+    if (r.layerId !== lastLayerId) {
+      html += `<tr>
+        <td colspan="${3 + frameworks.length}" style="background:${layer.color}11;border-bottom:1px solid ${layer.color}33;padding:8px 12px">
+          <a href="layer/${layer.id}.html" style="font-family:var(--font-mono);font-size:11px;color:${layer.color};text-decoration:none;font-weight:500;display:flex;align-items:center;gap:8px">
+            <div style="width:8px;height:8px;border-radius:50%;background:${layer.color}"></div>
+            ${layer.name}
+          </a>
+        </td>
+      </tr>`;
+      lastLayerId = r.layerId;
+    }
+
+    html += `<tr>
+      <td><a href="risk/${r.id}.html" style="font-size:13px;color:var(--text);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">${r.title}</a></td>
+      <td><span style="font-size:11px;color:${layer.color};font-family:var(--font-mono)">${layer.name.split(' ')[0]}</span></td>
+      <td>${severityBadge(r.severity)}</td>
+      ${frameworks.map(fw => {
+        const hasFw = r.frameworks.includes(fw.id);
+        const ctrl = r.controls.find(c => c.framework === fw.id);
+        const c = FW_COLORS[fw.id];
+        if (!hasFw) return `<td style="text-align:center"><span style="color:var(--border2);font-size:14px">·</span></td>`;
+        return `<td style="text-align:center">
+          <span title="${ctrl ? ctrl.ref + ': ' + ctrl.title : ''}" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:4px;background:${c.bg};color:${c.color};font-size:12px;cursor:default" title="${ctrl ? ctrl.ref : ''}">✓</span>
+        </td>`;
+      }).join('')}
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  document.getElementById('table-wrap').innerHTML = html;
+}
+
+renderTable();
+</script>
+</body>
+</html>

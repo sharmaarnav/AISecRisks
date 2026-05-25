@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Training data extraction — AI Risk Explorer</title>
+<meta name="description" content="Adversaries craft specific queries to extract verbatim or near-verbatim content from a model's training data, potentially exposing confidential documents, sourc">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/data.html">Data Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Training data extraction</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#05966922;color:#059669;border:1px solid #05966944">Data Layer</span>
+        <span class="severity-badge sev-high">high</span>
+      </div>
+      <h1>Training data extraction</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE ATLAS</span><span class="fw-pill" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span><span class="fw-pill" style="background:rgba(3,105,161,0.15);color:#7DD3FC;border:1px solid rgba(3,105,161,0.3)">ENISA</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">Adversaries craft specific queries to extract verbatim or near-verbatim content from a model's training data, potentially exposing confidential documents, source code, or PII that was used during training.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">Repeated queries to a code-completion model using known prefixes from internal codebases can extract API keys, passwords, and proprietary algorithms that were included in training data.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">Carlini et al. (2021) extracted 600+ memorised sequences from GPT-2. ChatGPT training data extraction demonstrated in 2023 research.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>3 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(14,116,144,0.15);color:#67E8F9;border:1px solid rgba(14,116,144,0.3)">MITRE</span>
+          <div>
+            <div class="control-title">API output controls</div>
+            <div class="control-ref">AML.T0024 – Exfil via ML APIs</div>
+          </div>
+        </div>
+        <div class="control-detail">Rate-limit inference APIs, monitor for membership inference attack patterns, and implement output filtering to prevent verbatim reproduction of training content.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(225,29,72,0.15);color:#FCA5A5;border:1px solid rgba(225,29,72,0.3)">OWASP</span>
+          <div>
+            <div class="control-title">Output sanitisation</div>
+            <div class="control-ref">LLM06 – Sensitive Info Disclosure</div>
+          </div>
+        </div>
+        <div class="control-detail">Restrict model outputs, apply content classifiers to detect training data regurgitation, and never include sensitive internal documents in training corpora.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(3,105,161,0.15);color:#7DD3FC;border:1px solid rgba(3,105,161,0.3)">ENISA</span>
+          <div>
+            <div class="control-title">Query rate limiting</div>
+            <div class="control-ref">D.5 – Model confidentiality</div>
+          </div>
+        </div>
+        <div class="control-detail">Implement query budgets per API key, add calibrated noise to output probabilities, and monitor for systematic enumeration that suggests extraction attempts.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-high">high</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#059669">Data Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">MITRE ATLAS</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">v5.1 (2025)</div>
+        </div>
+        <a href="https://atlas.mitre.org/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#67E8F9">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">OWASP LLM Top 10</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2025</div>
+        </div>
+        <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#FCA5A5">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">ENISA AI Threat Landscape</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2024</div>
+        </div>
+        <a href="https://www.enisa.europa.eu/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#7DD3FC">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Data Layer</h3>
+      <a class="related-risk" href="data-poisoning.html">
+        <div class="related-dot" style="background:#059669"></div>
+        <div>
+          <div class="related-title">Training data poisoning</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-critical">critical</span></div>
+        </div>
+      </a><a class="related-risk" href="data-privacy.html">
+        <div class="related-dot" style="background:#059669"></div>
+        <div>
+          <div class="related-title">PII leakage in training data</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="data-bias.html">
+        <div class="related-dot" style="background:#059669"></div>
+        <div>
+          <div class="related-title">Biased or unrepresentative training data</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="data-supply-chain.html">
+        <div class="related-dot" style="background:#059669"></div>
+        <div>
+          <div class="related-title">Compromised data supply chain</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="data-drift.html">
+        <div class="related-dot" style="background:#059669"></div>
+        <div>
+          <div class="related-title">Data / concept drift</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-medium">medium</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/data.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Data Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>

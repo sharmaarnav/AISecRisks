@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Risk Explorer — Security risks across the AI stack</title>
+<meta name="description" content="A comprehensive map of AI security risks across the AI stack, mapped to NIST, OWASP, MITRE ATLAS, ENISA, EU AI Act, and more.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Explorer</a>
+    <a href="search.html">Search</a>
+    <a href="frameworks.html">Frameworks</a>
+    <a href="crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow">AI Security Reference</div>
+    <h1>Risks across the<br><em>AI stack</em></h1>
+    <p>A structured reference for security architects mapping AI-specific risks to controls from NIST, OWASP, MITRE ATLAS, ENISA, EU AI Act, CISA, Google SAIF, and ISO 42001.</p>
+    <div class="hero-stats" id="hero-stats"></div>
+  </div>
+
+  <!-- Framework filter pills -->
+  <div style="margin-bottom: 1.5rem;">
+    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">Filter by framework</div>
+    <div class="filter-row" id="fw-filter"></div>
+  </div>
+
+  <!-- Severity filter -->
+  <div style="margin-bottom: 2rem;">
+    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">Filter by severity</div>
+    <div class="filter-row" id="sev-filter"></div>
+  </div>
+
+  <!-- Layer accordion -->
+  <div class="layers-grid" id="layers-grid"></div>
+
+  <!-- Frameworks strip -->
+  <div style="border-top: 1px solid var(--border); padding-top: 2rem; margin-bottom: 3rem;">
+    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;">Frameworks covered</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="fw-strip"></div>
+  </div>
+</div>
+
+<footer>
+  <span>AI Risk Explorer · Built for security architects · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script>
+let activeFw = 'all';
+let activeSev = 'all';
+
+function init() {
+  // Hero stats
+  const allRisks = getAllRisks();
+  const totalControls = allRisks.reduce((acc, r) => acc + r.controls.length, 0);
+  document.getElementById('hero-stats').innerHTML = `
+    <div class="hero-stat"><div class="hero-stat-num">${allRisks.length}</div><div class="hero-stat-label">Mapped risks</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">${totalControls}</div><div class="hero-stat-label">Control mappings</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">${AI_RISK_DATA.frameworks.length}</div><div class="hero-stat-label">Frameworks</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">${AI_RISK_DATA.layers.length}</div><div class="hero-stat-label">AI stack layers</div></div>
+  `;
+
+  // FW filter
+  const fwEl = document.getElementById('fw-filter');
+  fwEl.innerHTML = `<button class="filter-btn active" data-fw="all">All frameworks</button>`;
+  AI_RISK_DATA.frameworks.forEach(fw => {
+    fwEl.innerHTML += `<button class="filter-btn" data-fw="${fw.id}">${fw.name}</button>`;
+  });
+  fwEl.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    activeFw = btn.dataset.fw;
+    fwEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLayers();
+  });
+
+  // Sev filter
+  const sevEl = document.getElementById('sev-filter');
+  ['all','critical','high','medium','low'].forEach(s => {
+    sevEl.innerHTML += `<button class="filter-btn${s==='all'?' active':''}" data-sev="${s}">${s === 'all' ? 'All severities' : s.charAt(0).toUpperCase()+s.slice(1)}</button>`;
+  });
+  sevEl.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    activeSev = btn.dataset.sev;
+    sevEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLayers();
+  });
+
+  // FW strip
+  const strip = document.getElementById('fw-strip');
+  AI_RISK_DATA.frameworks.forEach(fw => {
+    const c = FW_COLORS[fw.id];
+    strip.innerHTML += `<a href="${fw.url}" target="_blank" style="font-family:var(--font-mono);font-size:11px;padding:4px 12px;border-radius:4px;background:${c.bg};color:${c.color};border:1px solid ${c.border};text-decoration:none;">${fw.name}</a>`;
+  });
+
+  renderLayers();
+}
+
+function renderLayers() {
+  const grid = document.getElementById('layers-grid');
+  grid.innerHTML = '';
+
+  AI_RISK_DATA.layers.forEach(layer => {
+    let visibleRisks = layer.risks;
+    if (activeFw !== 'all') visibleRisks = visibleRisks.filter(r => r.frameworks.includes(activeFw));
+    if (activeSev !== 'all') visibleRisks = visibleRisks.filter(r => r.severity === activeSev);
+    if (visibleRisks.length === 0 && (activeFw !== 'all' || activeSev !== 'all')) return;
+
+    const row = document.createElement('div');
+    row.className = 'layer-row';
+    row.innerHTML = `
+      <div class="layer-header">
+        <div class="layer-dot" style="background:${layer.color}"></div>
+        <div style="flex:1">
+          <div class="layer-name">${layer.name}</div>
+          <div class="layer-sub text-sm" style="color:var(--text3);margin-top:2px">${layer.description.split('.')[0]}.</div>
+        </div>
+        <div class="layer-meta">
+          <span class="risk-count-badge" style="background:${layer.color}22;color:${layer.color};border:1px solid ${layer.color}44">${visibleRisks.length} risk${visibleRisks.length!==1?'s':''}</span>
+          <a href="layer/${layer.id}.html" style="font-family:var(--font-mono);font-size:11px;color:var(--text3);padding:4px 10px;border:1px solid var(--border);border-radius:4px;text-decoration:none;white-space:nowrap;" onclick="event.stopPropagation()">View layer →</a>
+          <i class="layer-caret">›</i>
+        </div>
+      </div>
+      <div class="layer-risks">
+        <div class="risks-grid" id="risks-${layer.id}"></div>
+      </div>
+    `;
+
+    const header = row.querySelector('.layer-header');
+    header.addEventListener('click', () => {
+      row.classList.toggle('open');
+    });
+
+    grid.appendChild(row);
+
+    const rGrid = document.getElementById(`risks-${layer.id}`);
+    visibleRisks.forEach(risk => {
+      const fwBadges = risk.frameworks.slice(0,4).map(f => fwBadge(f)).join('');
+      rGrid.innerHTML += `
+        <a href="risk/${risk.id}.html" class="risk-card animate-in">
+          <div class="risk-card-title">${risk.title}</div>
+          <div class="risk-card-sub">${truncate(risk.description, 100)}</div>
+          <div class="risk-card-footer">
+            ${severityBadge(risk.severity)}
+            <div class="fw-pills">${fwBadges}</div>
+          </div>
+        </a>
+      `;
+    });
+  });
+}
+
+init();
+</script>
+</body>
+</html>

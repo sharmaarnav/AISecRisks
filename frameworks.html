@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frameworks — AI Risk Explorer</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="index.html">Explorer</a>
+    <a href="search.html">Search</a>
+    <a href="frameworks.html" class="active">Frameworks</a>
+    <a href="crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right"><span class="badge-nav">v1.0 · 2025</span></div>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow">Reference</div>
+    <h1>AI risk <em>frameworks</em></h1>
+    <p>Nine frameworks and standards used to map AI risks and controls in this reference. Each framework addresses different aspects of the AI risk landscape.</p>
+  </div>
+
+  <div class="fw-grid" id="fw-grid"></div>
+
+  <div style="border-top:1px solid var(--border);padding-top:2.5rem;margin-bottom:3rem">
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem">Framework coverage by AI stack layer</div>
+    <div id="coverage-table"></div>
+  </div>
+</div>
+
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script>
+const fwDescriptions = {
+  nist: "The NIST AI Risk Management Framework provides a structured 'Map, Measure, Manage, Govern' methodology for identifying and managing AI risks across the full lifecycle. The 2024 Generative AI Profile extends this to LLM-specific risks.",
+  owasp: "The OWASP Top 10 for LLMs (2025 edition) identifies the most critical vulnerabilities specific to large language model applications, providing actionable mitigation guidance for each. Updated annually.",
+  mitre: "MITRE ATLAS (Adversarial Threat Landscape for AI Systems) v5.1 maps adversarial ML attack tactics and techniques using an ATT&CK-style matrix. The November 2025 release covers 16 tactics, 84 techniques, and 32 mitigations.",
+  enisa: "The ENISA AI Threat Landscape provides a multilayer framework categorising AI threats across data, model, application, and governance dimensions. Published by the EU cybersecurity agency.",
+  euai: "The EU AI Act (2024) is the world's first comprehensive AI regulation. Enforcement began August 2024 for prohibited practices. High-risk AI obligations phase in from August 2025, with GPAI obligations active.",
+  cisa: "CISA and NCSC joint guidance on Secure-by-Design AI covers secure development, deployment, and operation of AI systems. Aligned with US national AI security strategy.",
+  saif: "Google's Secure AI Framework (SAIF) provides six core principles for securing AI systems, covering the AI stack from data through deployment. Focused on practical implementation guidance.",
+  iso: "ISO/IEC 42001:2023 is the first international AI management system standard. Clause 6.1 requires risk assessment; Clause 8 covers operational AI controls. Certifiable by third-party auditors.",
+  maestro: "CSA MAESTRO (February 2025) is a structured framework for identifying, modelling, and mitigating threats in agentic AI systems — those capable of autonomous reasoning, tool use, and multi-agent coordination."
+};
+
+// Render framework cards
+const grid = document.getElementById('fw-grid');
+AI_RISK_DATA.frameworks.forEach(fw => {
+  const c = FW_COLORS[fw.id];
+  // Count risks that reference this framework
+  const riskCount = getAllRisks().filter(r => r.frameworks.includes(fw.id)).length;
+  const ctrlCount = getAllRisks().reduce((acc, r) => acc + r.controls.filter(c => c.framework === fw.id).length, 0);
+
+  grid.innerHTML += `<div class="fw-card">
+    <div class="fw-card-top">
+      <div class="fw-dot" style="background:${c.color}"></div>
+      <div>
+        <div class="fw-name">${fw.name}</div>
+        <div class="fw-version">${fw.version}</div>
+      </div>
+    </div>
+    <p class="fw-desc">${fwDescriptions[fw.id] || ''}</p>
+    <div style="display:flex;gap:12px;margin-bottom:12px">
+      <div>
+        <div style="font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text)">${riskCount}</div>
+        <div style="font-size:11px;color:var(--text3)">risks covered</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text)">${ctrlCount}</div>
+        <div style="font-size:11px;color:var(--text3)">control mappings</div>
+      </div>
+    </div>
+    <a href="${fw.url}" target="_blank" class="fw-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Official documentation
+    </a>
+  </div>`;
+});
+
+// Coverage table by layer
+const allRisks = getAllRisks();
+const coverageEl = document.getElementById('coverage-table');
+let tableHTML = `<div style="overflow-x:auto"><table class="crosswalk-table" style="min-width:600px">
+  <thead><tr>
+    <th>Layer</th>
+    <th>Risks</th>
+    ${AI_RISK_DATA.frameworks.map(fw => `<th>${fw.short}</th>`).join('')}
+  </tr></thead>
+  <tbody>`;
+
+AI_RISK_DATA.layers.forEach(layer => {
+  const layerRisks = allRisks.filter(r => r.layerId === layer.id);
+  tableHTML += `<tr>
+    <td>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:8px;height:8px;border-radius:50%;background:${layer.color};flex-shrink:0"></div>
+        <a href="layer/${layer.id}.html" style="font-size:13px;color:var(--text)">${layer.name}</a>
+      </div>
+    </td>
+    <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--text2)">${layerRisks.length}</span></td>
+    ${AI_RISK_DATA.frameworks.map(fw => {
+      const count = layerRisks.filter(r => r.frameworks.includes(fw.id)).length;
+      return `<td style="text-align:center">
+        ${count > 0
+          ? `<span style="font-family:var(--font-mono);font-size:11px;padding:2px 6px;border-radius:3px;background:${FW_COLORS[fw.id].bg};color:${FW_COLORS[fw.id].color}">${count}</span>`
+          : `<span style="color:var(--text3);font-size:12px">—</span>`
+        }
+      </td>`;
+    }).join('')}
+  </tr>`;
+});
+
+tableHTML += `</tbody></table></div>`;
+coverageEl.innerHTML = tableHTML;
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Over-reliance and automation bias — AI Risk Explorer</title>
+<meta name="description" content="Users place excessive trust in AI outputs, failing to apply critical judgement. When the AI is wrong — or has been manipulated to be wrong — the error propagate">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><span>//</span> AI Risk Explorer</div>
+  <div class="nav-links">
+    <a href="../index.html">Explorer</a>
+    <a href="../search.html">Search</a>
+    <a href="../frameworks.html">Frameworks</a>
+    <a href="../crosswalk.html">Crosswalk</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-nav">v1.0 · 2025</span>
+  </div>
+</nav>
+<div class="container">
+  <div class="risk-detail">
+    <div class="breadcrumb animate-in">
+      <a href="../index.html">Explorer</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="../layer/application.html">Application Layer</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Over-reliance and automation bias</span>
+    </div>
+
+    <div class="risk-title-block animate-in">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <span style="font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:4px;background:#0EA5E922;color:#0EA5E9;border:1px solid #0EA5E944">Application Layer</span>
+        <span class="severity-badge sev-medium">medium</span>
+      </div>
+      <h1>Over-reliance and automation bias</h1>
+      <div class="risk-meta" style="margin-top:12px">
+        <div class="fw-pills"><span class="fw-pill" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span><span class="fw-pill" style="background:rgba(29,78,216,0.15);color:#A5B4FC;border:1px solid rgba(29,78,216,0.3)">EU AI Act</span><span class="fw-pill" style="background:rgba(124,58,237,0.15);color:#C4B5FD;border:1px solid rgba(124,58,237,0.3)">ISO 42001</span></div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">3 controls mapped</span>
+      </div>
+    </div>
+
+    <div class="detail-grid animate-in">
+      <div class="detail-main">
+        <div class="detail-section">
+          <h2>Description</h2>
+          <p class="detail-body">Users place excessive trust in AI outputs, failing to apply critical judgement. When the AI is wrong — or has been manipulated to be wrong — the error propagates unchecked into decisions with real-world consequences.</p>
+        </div>
+
+        <div class="detail-section">
+          <h2>Attack scenario</h2>
+          <div class="scenario-box">A security analyst delegates all initial triage to an AI SIEM tool. Attackers craft alerts designed to be misclassified by the AI as low-severity. The analyst accepts AI verdicts without review, allowing the intrusion to progress undetected.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>Real-world examples</h2>
+          <div class="example-box">Mata v. Avianca AI hallucination case (2023). Multiple medical AI over-reliance incidents. Air Canada chatbot liability case.</div>
+        </div>
+
+        <div class="detail-section">
+          <h2>3 mapped controls</h2>
+          <div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(37,99,235,0.15);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)">NIST</span>
+          <div>
+            <div class="control-title">Mandatory human review design</div>
+            <div class="control-ref">GOVERN 3.1 – Human oversight</div>
+          </div>
+        </div>
+        <div class="control-detail">Design AI systems with mandatory human checkpoints for high-stakes decisions. Make AI uncertainty explicit — surface confidence levels and disagreement signals.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(29,78,216,0.15);color:#A5B4FC;border:1px solid rgba(29,78,216,0.3)">EU AI Act</span>
+          <div>
+            <div class="control-title">Override capability requirement</div>
+            <div class="control-ref">Art. 14 – Human oversight</div>
+          </div>
+        </div>
+        <div class="control-detail">EU AI Act requires high-risk systems to allow human operators to override AI decisions. Document and test override mechanisms.</div>
+      </div>
+<div class="control-card">
+        <div class="control-header">
+          <span class="control-badge" style="background:rgba(124,58,237,0.15);color:#C4B5FD;border:1px solid rgba(124,58,237,0.3)">ISO 42001</span>
+          <div>
+            <div class="control-title">User training programme</div>
+            <div class="control-ref">Clause 8.5 – Human-AI interaction</div>
+          </div>
+        </div>
+        <div class="control-detail">Train users on AI limitations, failure modes, and appropriate scepticism. Document known failure cases. Make limitations visible in the UI.</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <h3>Risk details</h3>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Severity</span>
+            <span class="severity-badge sev-medium">medium</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Layer</span>
+            <span class="sidebar-stat-value" style="color:#0EA5E9">Application Layer</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Frameworks</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="sidebar-stat-label">Controls mapped</span>
+            <span class="sidebar-stat-value">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Frameworks</h3>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">NIST AI RMF</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023 + GenAI Profile 2024</div>
+        </div>
+        <a href="https://airc.nist.gov/" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#93C5FD">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">EU AI Act</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2024 (enforcement 2025)</div>
+        </div>
+        <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#A5B4FC">↗</a>
+      </div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;color:var(--text)">ISO/IEC 42001</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono)">2023</div>
+        </div>
+        <a href="https://www.iso.org/standard/81230.html" target="_blank" style="font-family:var(--font-mono);font-size:10px;color:#C4B5FD">↗</a>
+      </div>
+        </div>
+
+        <div class="sidebar-card">
+      <h3>Related risks in Application Layer</h3>
+      <a class="related-risk" href="excessive-agency.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Excessive agency / unsafe autonomous actions</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-critical">critical</span></div>
+        </div>
+      </a><a class="related-risk" href="plugin-compromise.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Plugin / third-party integration compromise</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="sensitive-disclosure.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Sensitive information disclosure</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="misinformation.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">AI-generated misinformation and manipulation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a><a class="related-risk" href="multiagent-trust.html">
+        <div class="related-dot" style="background:#0EA5E9"></div>
+        <div>
+          <div class="related-title">Multi-agent trust chain exploitation</div>
+          <div style="margin-top:2px"><span class="severity-badge sev-high">high</span></div>
+        </div>
+      </a>
+    </div>
+
+        <div style="margin-top:12px">
+          <a href="../layer/application.html" style="display:block;text-align:center;font-size:13px;padding:10px;border:1px solid var(--border);border-radius:var(--r);color:var(--text2);text-decoration:none;">← All Application Layer risks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <span>AI Risk Explorer · <a href="https://arnav.au" target="_blank">arnav.au</a></span>
+  <span>References: NIST AI RMF 2023, OWASP LLM Top 10 2025, MITRE ATLAS v5.1, ENISA 2024, EU AI Act 2024</span>
+</footer>
+</body>
+</html>
